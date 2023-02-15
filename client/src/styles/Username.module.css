@@ -8,11 +8,18 @@
 }
 
 .profile_img {
-  @apply border-4 border-gray-100 w-[135px] rounded-full shadow-lg cursor-pointer hover:border-gray-200;
-}
-
-.text-box {
-  @apply border-0 px-5 py-4 rounded-xl w-3/4 shadow-sm text-lg focus:outline-none;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 4px solid #fff;
+  border-radius: 50%;
+  &:hover {
+    border-color: #ccc;
+  }
 }
 
 .btn {
