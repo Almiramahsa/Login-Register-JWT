@@ -21,6 +21,7 @@ export default function Username() {
 
   return (
     <div className="container mx-auto">
+      <Toaster position="top-center" reverseOrder={false}></Toaster>
       <div className="flex justify-center items-center h-screen">
         <div className={styles.glass}>
           <div className="title flex flex-col items-center">
@@ -33,7 +34,7 @@ export default function Username() {
               <img src={avatar} className={styles.profile_img} alt="avatar" />
             </div>
             <div className="textbox flex flex-col items-center gap-6">
-              <input {...formik.getFieldProps('username')} className="placeholder-gray-500 placeholder-opacity-25" type="text" placeholder="Username" />
+              <input {...formik.getFieldProps('username')} className="placeholder-gray-500 placeholder-opacity-25 w-3/4 mt-4 border border-gray-300 p-2 rounded-md" type="text" placeholder="Username" />
               <button className={styles.btn} type="submit">
                 Submit
               </button>

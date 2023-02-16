@@ -4,7 +4,7 @@
   box-shadow: 0 4px 30px #4747470b;
   backdrop-filter: blur(7.1px);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  @apply border-4 border-gray-50 shrink-0 h-3/4 w-[30%] rounded-3xl py-20 px-7 min-w-max;
+  @apply border-4 border-gray-50 shrink-0 h-4/5 w-[30%] rounded-2xl py-20 px-7 min-w-max;
 }
 
 .profile_img {
@@ -28,4 +28,58 @@
 
 .btn:hover {
   background-color: #ff6a6a;
+}
+
+input[type='file'] {
+  display: none;
+}
+.profile_label {
+  position: relative;
+}
+
+.plus {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #007aff;
+  color: white;
+  font-size: 18px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+.remove_btn {
+  position: absolute;
+  bottom: -3px;
+  right: -3px;
+  background-color: #cd0404;
+  color: white;
+  font-size: 18px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  &:hover {
+    background-color: #f5edce;
+  }
+}
+
+.remove_btn:hover::before {
+  content: 'Hapus foto profil ?';
+  position: absolute;
+  bottom: 30px;
+  right: 50%;
+  transform: translateX(100%);
+  padding: 5px 10px;
+  background-color: #f5edce;
+  color: #000;
+  border-radius: 5px;
+  font-size: 14px;
+  white-space: nowrap;
 }
