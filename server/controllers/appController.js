@@ -130,9 +130,28 @@ export async function login(req, res) {
     return res.status(500).send({ error });
   }
 }
-
+/* GET http://localhost:5000/api/user/example123
+* @param:{
+    "username" : "example123",
+    "password" : "admin123"
+}
+ */
 export async function getUser(req, res) {
-  res.json('getUser route');
+  const { username } = req.params;
+  try {
+    if (!username) return res.status(501).send({ error: 'Invalid username' });
+    UserModel.findOne({ username }, function (err, user) {
+      if (err) return res.status(500).send({ err });
+      if (!user) return res.status(501).send({ error: "Couldn't find user" });
+
+      // mongoose return unnecessary data with object and convert to JSON
+      const { password, ...rest } = Object.assign({}, user.toJSON());
+
+      return res.status(201).send(rest);
+    });
+  } catch (error) {
+    return res.status(404).send({ error: 'Cannot find user data' });
+  }
 }
 
 export async function updateUser(req, res) {
