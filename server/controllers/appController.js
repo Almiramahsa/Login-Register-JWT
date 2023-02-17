@@ -1,8 +1,23 @@
 import UserModel from '../model/User.model.js';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import ENV from '../config.js';
 
-/*
-  Contoh POST http://localhost:5000/api/register
+//middleware for verify uset
+export async function verifyUser(req, res, next) {
+  try {
+    const { username } = req.method == 'GET' ? req.query : req.body;
+
+    //check user existing
+    let exist = await UserModel.findOne({ username });
+    if (!exist) return res.status(404).send({ error: "Can't find user" });
+    next();
+  } catch (error) {
+    return res.status(404).send({ error: 'Authentication Error' });
+  }
+}
+
+/*Contoh POST http://localhost:5000/api/register
   @param :
   {
     "username" : "example123",
@@ -15,6 +30,7 @@ import bcrypt from 'bcrypt';
     "profile" : ""
   }
 */
+// Register
 export async function register(req, res) {
   try {
     const { username, password, profile, email } = req.body;
@@ -51,7 +67,7 @@ export async function register(req, res) {
 
               user
                 .save()
-                .then((result) => res.status(201).send({ msg: 'User Register Successfully' }))
+                .then((result) => res.status(201).send({ message: 'User Register Successfully' }))
                 .catch((error) => res.status(500).send({ error }));
             })
             .catch((error) => {
@@ -72,9 +88,47 @@ export async function register(req, res) {
     });
   }
 }
-
+/* POST http://localhost:5000/api/login
+* @param:{
+    "username" : "example123",
+    "password" : "admin123"
+}
+ */
 export async function login(req, res) {
-  res.json('login route');
+  const { username, password } = req.body;
+  try {
+    UserModel.findOne({ username })
+      .then((user) => {
+        bcrypt
+          .compare(password, user.password)
+          .then((passwordCheck) => {
+            if (!passwordCheck) return res.status(400).send({ error: "Don't have Password " });
+
+            // create jwt token
+            const token = jwt.sign(
+              {
+                userId: user._id,
+                username: user.username,
+              },
+              'ENV.JWT_SECRET',
+              { expiresIn: '24h' }
+            );
+            return res.status(200).send({
+              message: 'Login Succesfull',
+              username: user.username,
+              token,
+            });
+          })
+          .catch((error) => {
+            return res.status(400).send({ error: 'Password do not match' });
+          });
+      })
+      .catch((error) => {
+        return res.status(404).send({ error: 'Username not found' });
+      });
+  } catch (error) {
+    return res.status(500).send({ error });
+  }
 }
 
 export async function getUser(req, res) {
