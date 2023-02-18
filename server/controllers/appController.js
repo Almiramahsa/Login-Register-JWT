@@ -154,9 +154,39 @@ export async function getUser(req, res) {
   }
 }
 
-export async function updateUser(req, res) {
-  res.json('updateUser route');
+/* PUT http://localhost:5000/api/updateuser
+* @param:{
+    "id" : "<userid>"
 }
+body : {
+  firstName : '',
+  address : '',
+  profile : ''
+}
+ */
+export async function updateUser(req, res) {
+  const { username } = req.params;
+
+  try {
+    const id = req.query.id;
+    if (id) {
+      const body = req.body;
+
+      try {
+        // update data
+        await UserModel.updateOne({ _id: id }, body);
+        return res.status(201).send({ msg: 'Record data updated' });
+      } catch (error) {
+        return res.status(500).send({ error: 'Internal server error' });
+      }
+    } else {
+      return res.status(401).send({ error: 'User not found' });
+    }
+  } catch (error) {
+    return res.status(500).send({ error: 'Internal server error' });
+  }
+}
+
 export async function generateOTP(req, res) {
   res.json('generateOTP route');
 }
