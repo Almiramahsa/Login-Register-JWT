@@ -4,7 +4,7 @@ const router = Router();
 
 //import controllers
 import * as controller from '../controllers/appController.js';
-
+import Auth from '../middleware/auth.js';
 // POST
 router.route('/register').post(controller.register);
 // router.route('/registerMail').post((reg, res) => res.json('register mail'));
@@ -17,6 +17,6 @@ router.route('/user/:generateOTP').get(controller.generateOTP);
 router.route('/user/:verifyOTP').get(controller.verifyOTP);
 router.route('/user/:createResetSession').get(controller.createResetSession);
 // PUT
-router.route('/updateuser').put(controller.updateUser);
+router.route('/updateuser').put(Auth, controller.updateUser);
 router.route('/resetPassword').put(controller.resetPassword);
 export default router;

@@ -1,7 +1,6 @@
 import UserModel from '../model/User.model.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import ENV from '../config.js';
 
 //middleware for verify uset
 export async function verifyUser(req, res, next) {
@@ -165,20 +164,18 @@ body : {
 }
  */
 export async function updateUser(req, res) {
-  const { username } = req.params;
-
   try {
-    const id = req.query.id;
-    if (id) {
+    //
+    const { userId } = req.user;
+
+    if (userId) {
       const body = req.body;
 
-      try {
-        // update data
-        await UserModel.updateOne({ _id: id }, body);
+      // update data
+      UserModel.updateOne({ _id: userId }, function (err, data) {
+        if (err) throw err;
         return res.status(201).send({ msg: 'Record data updated' });
-      } catch (error) {
-        return res.status(500).send({ error: 'Internal server error' });
-      }
+      });
     } else {
       return res.status(401).send({ error: 'User not found' });
     }
