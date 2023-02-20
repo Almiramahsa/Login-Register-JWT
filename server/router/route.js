@@ -14,11 +14,12 @@ router.route('/authenticate').post((reg, res) => res.end());
 router.route('/login').post(controller.verifyUser, controller.login);
 
 // GET
-router.route('/user/:username').get(controller.getUser);
-router.route('/user/:generateOTP').get(controller.verifyUser, localVariables, controller.generateOTP);
-router.route('/user/:verifyOTP').get(controller.verifyOTP);
-router.route('/user/:createResetSession').get(controller.createResetSession);
+router.route('/user/:username').get(controller.getUser); // user with username
+router.route('/generateOTP').get(controller.verifyUser, localVariables, controller.generateOTP); // generate random OTP
+router.route('/verifyOTP').get(controller.verifyUser, controller.verifyOTP); // verify generated OTP
+router.route('/createResetSession').get(controller.createResetSession); // reset all the variables
+
 // PUT
-router.route('/updateuser').put(Auth, controller.updateUser);
-router.route('/resetPassword').put(controller.resetPassword);
+router.route('/updateuser').put(Auth, controller.updateUser); // is use to update the user profile
+router.route('/resetPassword').put(controller.verifyUser, controller.resetPassword); // use to reset password
 export default router;
