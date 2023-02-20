@@ -28,7 +28,7 @@ connect()
         console.log(`Server connected to http://localhost:${port}`);
       });
     } catch (error) {
-      console.log('Cannpt connect to the server');
+      console.log('Cannot connect to the server');
     }
   })
   .catch((error) => {
