@@ -11,7 +11,7 @@ import { localVariables } from '../middleware/auth.js';
 // POST
 router.route('/register').post(controller.register);
 router.route('/registerMail').post(registerMail); //
-router.route('/authenticate').post((reg, res) => res.end());
+router.route('/authenticate').post(controller.verifyUser, (reg, res) => res.end());
 router.route('/login').post(controller.verifyUser, controller.login);
 
 // GET

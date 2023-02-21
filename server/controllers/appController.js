@@ -174,7 +174,7 @@ export async function updateUser(req, res) {
       UserModel.updateOne({ _id: userId }, body, function (err, data) {
         if (err) throw err;
 
-        return res.status(201).send({ msg: 'Record Updated...!' });
+        return res.status(201).send({ message: 'Record Updated...!' });
       });
     } else {
       return res.status(401).send({ error: 'User Not Found...!' });
@@ -197,7 +197,7 @@ export async function verifyOTP(req, res) {
   if (parseInt(req.app.locals.OTP) === parseInt(code)) {
     req.app.locals.OTP = null; // reset the OTP value
     req.app.locals.resetSession = true; // start session for reset password
-    return res.status(201).send({ msg: 'Verify Successsfully!' });
+    return res.status(201).send({ message: 'Verify Successsfully!' });
   }
   return res.status(400).send({ error: 'Invalid OTP' });
 }
@@ -226,7 +226,7 @@ export async function resetPassword(req, res) {
               UserModel.updateOne({ username: user.username }, { password: hashedPassword }, function (err, data) {
                 if (err) throw err;
                 req.app.locals.resetSession = false; // reset session
-                return res.status(201).send({ msg: 'Record Updated...!' });
+                return res.status(201).send({ message: 'Record Updated...!' });
               });
             })
             .catch((error) => {
