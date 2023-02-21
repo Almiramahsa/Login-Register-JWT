@@ -27,7 +27,7 @@ export default function Register() {
       let registerPromise = registerUser(values);
       toast.promise(registerPromise, {
         loading: 'Creating new user',
-        success: <p>Register Success</p>,
+        success: <p>Register Successfull</p>,
         error: <p>Couldn register the user</p>,
       });
       registerPromise.then(function () {
