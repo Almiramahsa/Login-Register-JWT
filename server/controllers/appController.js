@@ -174,7 +174,7 @@ export async function updateUser(req, res) {
       UserModel.updateOne({ _id: userId }, body, function (err, data) {
         if (err) throw err;
 
-        return res.status(201).send({ message: 'Record Updated...!' });
+        return res.status(201).send({ msg: 'Record Updated...!' });
       });
     } else {
       return res.status(401).send({ error: 'User Not Found...!' });

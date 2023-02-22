@@ -7,7 +7,6 @@ import convertToBase64 from '../helper/convert';
 import useFetch from '../hooks/fetch.hook.js';
 import { updateUser } from '../helper/helper.js';
 import styles from '../styles/Username.module.css';
-import extend from '../styles/Profile.module.css';
 import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
@@ -59,14 +58,15 @@ export default function Profile() {
   return (
     <div className="container mx-auto">
       <Toaster position="top-center" reverseOrder={false}></Toaster>
-      <div className="flex justify-center items-center h-screen">
-        <div className={`${styles.glass} ${extend.glass}`} style={{ width: '40%' }}>
-          <div className="title flex flex-col items-center">
-            <h5 className="text-3xl font-bold"> Profile</h5>
-            <span className="py-4 text-xl w-2/3 text-center text-gray-400">Update your personal information here</span>
+      <div className="flex justify-center items-center text-center h-screen">
+        <div className={`${styles.glass} glass w-72 flex-shrink-0 rounded-2xl py-20 px-7`}>
+          <div className="card" style={{ width: '72px' }}></div>
+          <div className="flex-grow flex flex-col items-center justify-center">
+            <h5 className="text-xl font-bold"> Profile</h5>
+            <span className="py-4 text-regular w-2/3 text-center text-gray-400"> Update your personal information here</span>
           </div>
 
-          <form className="py-1" onSubmit={formik.handleSubmit}>
+          <form className="py-4 w-full" onSubmit={formik.handleSubmit}>
             <div className="profile flex justify-center py-4">
               <label htmlFor="profile" className={styles.profile_label}>
                 <img src={apiData?.profile || file || avatarBlank} className={styles.profile_img} alt="avatar_blank" />
@@ -81,7 +81,7 @@ export default function Profile() {
             </div>
 
             <div className="textbox flex flex-col items-center gap-6">
-              <div className="name flex w-3/4 gap-10">
+              <div className="name flex w-3/4 gap-4">
                 <input {...formik.getFieldProps('firstName')} className={`${styles.input} w-3/4 mt-4 border border-gray-300 p-2 rounded-md`} type="text" placeholder="First Name" />
                 <input {...formik.getFieldProps('lastName')} className={`${styles.input} w-3/4 mt-4 border border-gray-300 p-2 rounded-md`} type="text" placeholder="Last Name" />
               </div>
@@ -101,7 +101,7 @@ export default function Profile() {
               <span className="text-gray-500">
                 <div className="text-center py-4">
                   <span className="text-gray-500">
-                    come back later?{' '}
+                    Come back later?{' '}
                     <button onClick={userLogout} className="text-red-500" to="/">
                       Logout
                     </button>

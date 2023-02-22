@@ -25,7 +25,7 @@ export default function Password() {
       toast.promise(loginPromise, {
         loading: 'Checking user data',
         success: <p> Login Successfull</p>,
-        error: <p>asswords do NOT match</p>,
+        error: <p>Passwords do NOT match</p>,
       });
       loginPromise.then((res) => {
         let { token } = res.data;

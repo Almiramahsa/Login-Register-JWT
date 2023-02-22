@@ -49,11 +49,12 @@ export default function Register() {
   return (
     <div className="container mx-auto">
       <Toaster position="top-center" reverseOrder={false}></Toaster>
-      <div className="flex justify-center items-center h-screen">
-        <div className={styles.glass} style={{ width: '40%' }}>
-          <div className="title flex flex-col items-center">
-            <h5 className="text-3xl font-bold"> Register</h5>
-            <span className="py-4 text-xl w-2/3 text-center text-gray-400">Register now and find the best version of you!</span>
+      <div className="flex justify-center items-center text-center h-screen">
+        <div className={`${styles.glass} glass w-72 flex-shrink-0 rounded-2xl py-20 px-7`}>
+          <div className="card" style={{ width: '72px' }}></div>
+          <div className="flex-grow flex flex-col items-center justify-center">
+            <h5 className="text-xl font-bold">Register</h5>
+            <span className="py-4 text-regular w-2/3 text-center text-gray-400">Register now and find the best version of you!</span>
           </div>
 
           <form className="py-1" onSubmit={formik.handleSubmit}>
