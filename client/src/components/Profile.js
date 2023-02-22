@@ -99,7 +99,6 @@ export default function Profile() {
 
             <div className="text-center py-4">
               <span className="text-gray-500">
-                Comeback Later?
                 <div className="text-center py-4">
                   <span className="text-gray-500">
                     come back later?{' '}
