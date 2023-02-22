@@ -1,30 +1,39 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import avatarBlank from '../assets/profile_blank.png';
-import { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';
 import { profileValidation } from '../helper/validate';
 import convertToBase64 from '../helper/convert';
-
+import useFetch from '../hooks/fetch.hook.js';
+import { updateUser } from '../helper/helper.js';
 import styles from '../styles/Username.module.css';
 import extend from '../styles/Profile.module.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
-  const [file, setFile] = useState(null);
-
+  const [file, setFile] = useState();
+  const [{ isLoading, apiData, serverError }] = useFetch();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      mobile: '',
-      address: '',
+      firstName: apiData?.firstName || '',
+      lastName: apiData?.lastName || '',
+      email: apiData?.email || '',
+      mobile: apiData?.mobile || '',
+      address: apiData?.address || '',
     },
+    enableReinitialize: true,
     validate: profileValidation,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      values = await Object.assign(values, { profile: file || '' });
+      values = await Object.assign(values, { profile: file || apiData?.profile || '' });
+      let updatePromise = updateUser(values);
+      toast.promise(updatePromise, {
+        loading: 'Updating data',
+        success: <p>Update Successfully</p>,
+        error: <p>Coudn't update data</p>,
+      });
       console.log(values);
     },
   });
@@ -35,6 +44,14 @@ export default function Profile() {
     setFile(base64);
   };
 
+  //logout
+  function userLogout() {
+    localStorage.removeItem('token');
+    navigate('/');
+  }
+
+  if (isLoading) return <p className="text-2xl font-bold">Loading</p>;
+  if (serverError) return <p className="text-2xl text-red-500">{serverError.message}</p>;
   const handleRemove = () => {
     setFile(null);
   };
@@ -52,7 +69,7 @@ export default function Profile() {
           <form className="py-1" onSubmit={formik.handleSubmit}>
             <div className="profile flex justify-center py-4">
               <label htmlFor="profile" className={styles.profile_label}>
-                <img src={file || avatarBlank} className={`${styles.profile_img} ${extend.profile_img}`} alt="avatar_blank" />
+                <img src={apiData?.profile || file || avatarBlank} className={styles.profile_img} alt="avatar_blank" />
                 {file && (
                   <button className={styles.remove_btn} type="button" onClick={handleRemove}>
                     -
@@ -76,16 +93,21 @@ export default function Profile() {
               <input {...formik.getFieldProps('address')} className={`${styles.input} w-3/4 mt-4 border border-gray-300 p-2 rounded-md`} type="text" placeholder="Address" />
 
               <button className={styles.btn} type="submit">
-                Register
+                Update
               </button>
             </div>
 
             <div className="text-center py-4">
               <span className="text-gray-500">
                 Comeback Later?
-                <Link className="text-red-500 px-3" to="/recovery">
-                  Logout
-                </Link>
+                <div className="text-center py-4">
+                  <span className="text-gray-500">
+                    come back later?{' '}
+                    <button onClick={userLogout} className="text-red-500" to="/">
+                      Logout
+                    </button>
+                  </span>
+                </div>
               </span>
             </div>
           </form>

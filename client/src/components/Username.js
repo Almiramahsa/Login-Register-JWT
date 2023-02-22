@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import avatar from '../assets/profile.jpg';
+import image from '../assets/landing_image.png';
 import styles from '../styles/Username.module.css';
 import { Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';
@@ -10,7 +10,6 @@ import { useAuthStore } from '../store/store.js';
 export default function Username() {
   const navigate = useNavigate();
   const setUsername = useAuthStore((state) => state.setUsername);
-
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -27,16 +26,16 @@ export default function Username() {
   return (
     <div className="container mx-auto">
       <Toaster position="top-center" reverseOrder={false}></Toaster>
-      <div className="flex justify-center items-center h-screen">
-        <div className={styles.glass}>
-          <div className="title flex flex-col items-center">
-            <h5 className="text-3xl font-bold"> Hello Again!</h5>
-            <span className="py-4 text-xl w-2/3 text-center text-gray-400">Semangat ya! Perjuangan baru dimulai</span>
+      <div className="flex justify-center items-center text-center h-screen">
+        <div className={`${styles.glass} glass w-72 flex-shrink-0 rounded-2xl py-20 px-7`}>
+          <div className="card" style={{ width: '72px' }}></div>
+          <div className="flex-grow flex flex-col items-center justify-center">
+            <h5 className="text-xl font-bold"> Hello Again!</h5>
+            <span className="py-4 text-regular w-2/3 text-center text-gray-400">Semangat ya! Perjuangan baru dimulai</span>
           </div>
-
-          <form className="py-1" onSubmit={formik.handleSubmit}>
+          <form className="py-4 w-full" onSubmit={formik.handleSubmit}>
             <div className="profile flex justify-center py-4">
-              <img src={avatar} className={styles.profile_img} alt="avatar" />
+              <img src={image} className="h-20 w-30 -left-3633 -top-5523 rounded-0" alt="avatar_blank" />{' '}
             </div>
             <div className="textbox flex flex-col items-center gap-6">
               <input {...formik.getFieldProps('username')} className="placeholder-gray-500 placeholder-opacity-25 w-3/4 mt-4 border border-gray-300 p-2 rounded-md" type="text" placeholder="Username" />
