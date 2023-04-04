@@ -14,4 +14,4 @@ Login &amp; Register MERN App
 - JWT Token
 
 ## Overview :
-![Login-Register](https://user-images.githubusercontent.com/53558772/222082694-89958535-e854-4b30-9cf6-54e5f9a38c9a.png)
+![Login](https://user-images.githubusercontent.com/53558772/229706473-c34eed23-58ee-4903-90be-20a18dd9c5f0.png)
